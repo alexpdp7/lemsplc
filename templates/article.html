@@ -1,0 +1,12 @@
+<html>
+ <body>
+  {% for p_text in detailed_article.p_texts %}
+   <p>{{ p_text }}</p>
+  {% endfor %}
+  <ul>
+   {% for comment in detailed_article.comments %}
+   <li>{{ comment.user }} - {{ comment.body }}</li>
+   {% endfor %}
+  </ul>
+ </body>
+</html>

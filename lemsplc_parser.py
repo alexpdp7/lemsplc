@@ -1,4 +1,7 @@
 import collections
+import json
+from urllib import request
+
 import pyquery
 
 
@@ -23,3 +26,21 @@ def front_page():
         )
 
     return comment_links.map(comment_link_to)
+
+
+DetailedArticle = collections.namedtuple('DetailedArticle', ['p_texts', 'comments'])
+DetailedArticleComment = collections.namedtuple('DetailedArticleComment', ['user', 'body'])
+
+
+def json_to_comment(json_):
+    return DetailedArticleComment(user=json_['user'], body=json_['body'])
+
+
+def get_detailed_article(url):
+    pq = pyquery.PyQuery(url)
+    p_texts = pq('[itemProp=articleBody]').find('p').map(lambda _, e: pyquery.PyQuery(e).text())
+    comment_id = pq('[data-commentId]').attr('data-commentid')
+    comments_url = 'http://www.marca.com/servicios/noticias/comentarios/comunidad/listarMejorValorados.html?noticia={0}&version=v2'.format(comment_id)
+    with request.urlopen(comments_url) as r:
+        comments = json.loads(r.read().decode('utf-8'))
+    return DetailedArticle(p_texts=p_texts, comments=map(json_to_comment, comments['items']))
