@@ -5,6 +5,7 @@ setup(name='lemsplc',
       install_requires=['pyquery',],
       extras_require={
         'dev': ['ipython', 'ipdb',],
+        'web': ['flask',]
       },
       python_requires='>=3',
 )
