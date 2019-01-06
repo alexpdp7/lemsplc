@@ -2,3 +2,5 @@ DEVELOPMENT
 
 $ pipenv install --python 3.6 -e .[dev]
 $ FLASK_APP=lemsplc_web.py pipenv run flask run
+
+requirements.txt is only to "fool" Dokku

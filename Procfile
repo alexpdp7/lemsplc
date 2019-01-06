@@ -1,1 +1,1 @@
-web: pip install .[web] gunicorn; gunicorn lemsplc_web:app
+web: gunicorn lemsplc_web:app
