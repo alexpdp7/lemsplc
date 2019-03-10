@@ -38,7 +38,7 @@ def json_to_comment(json_):
 
 def get_detailed_article(url):
     pq = pyquery.PyQuery(url)
-    p_texts = pq('[itemProp=articleBody]').find('p').map(lambda _, e: pyquery.PyQuery(e).text())
+    p_texts = pq('.row.content.cols-30-70').find('p').map(lambda _, e: pyquery.PyQuery(e).text())
     comment_id = pq('[data-commentId]').attr('data-commentid')
     comments_url = 'http://www.marca.com/servicios/noticias/comentarios/comunidad/listarMejorValorados.html?noticia={0}&version=v2'.format(comment_id)
     with request.urlopen(comments_url) as r:
