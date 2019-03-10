@@ -1,6 +1,5 @@
 DEVELOPMENT
 
-$ pipenv install --python 3.6 -e .[dev]
-$ FLASK_APP=lemsplc_web.py pipenv run flask run
+$ poetry run gunicorn lemsplc_web:app
 
-requirements.txt is only to "fool" Dokku
+setup.py/requirements.txt are only to "fool" Dokku
