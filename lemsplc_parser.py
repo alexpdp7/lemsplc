@@ -5,6 +5,9 @@ from urllib import request
 import pyquery
 
 
+BASE_URL = 'https://www.marca.com/'
+
+
 Article = collections.namedtuple('Article', ['comments', 'link', 'text'])
 
 
@@ -13,7 +16,7 @@ def _strip_fragment(url):
 
 
 def front_page():
-    pq = pyquery.PyQuery('http://www.marca.com')
+    pq = pyquery.PyQuery(BASE_URL)
     comment_links = pq('a[href*="js-comentar"]')
 
     def comment_link_to(_, e):
@@ -21,7 +24,7 @@ def front_page():
         link = _strip_fragment(pqe.attr('href'))
         return Article(
             comments=int(pqe.find('.number-comments').text()),
-            link=link,
+            link=link[len(BASE_URL):],
             text=pq('a[href="{0}"]'.format(link)).text().strip()
         )
 
@@ -37,7 +40,7 @@ def json_to_comment(json_):
 
 
 def get_detailed_article(url):
-    pq = pyquery.PyQuery(url)
+    pq = pyquery.PyQuery(BASE_URL + url)
     p_texts = pq('.row.content.cols-30-70').find('p').map(lambda _, e: pyquery.PyQuery(e).text())
     comment_id = pq('[data-commentId]').attr('data-commentid')
     comments_url = 'http://www.marca.com/servicios/noticias/comentarios/comunidad/listarMejorValorados.html?noticia={0}&version=v2'.format(comment_id)
