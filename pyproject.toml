@@ -6,7 +6,7 @@ authors = "alex@corcoles.net"
 [tool.poetry.dependencies]
 python = ">3.5"
 flask = {version = "^1.0",extras = ["web"]}
-gunicorn = {version = "^19.9",extras = ["web"]}
+gunicorn = {version = "^20.0",extras = ["web"]}
 pyquery = "^1.4"
 
 [tool.poetry.dev-dependencies]
