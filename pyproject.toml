@@ -2,6 +2,7 @@
 name = "lemsplc"
 version = "1.0.0"
 authors = ["alex@corcoles.net"]
+description = ""
 
 [tool.poetry.dependencies]
 python = ">3.5"
