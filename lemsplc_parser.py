@@ -16,14 +16,14 @@ def _strip_fragment(url):
 
 
 def front_page():
-    pq = pyquery.PyQuery(BASE_URL)
-    comment_links = pq('a[href*="js-comentar"]')
+    pq = pyquery.PyQuery(url=BASE_URL)
+    comment_links = pq('a[href*="ancla_comentarios"]')
 
     def comment_link_to(_, e):
         pqe = pyquery.PyQuery(e)
         link = _strip_fragment(pqe.attr('href'))
         return Article(
-            comments=int(pqe.find('.number-comments').text()),
+            comments=int(pqe.children()[1].text),
             link=link[len(BASE_URL):],
             text=pq('a[href="{0}"]'.format(link)).text().strip()
         )
@@ -40,7 +40,7 @@ def json_to_comment(json_):
 
 
 def get_detailed_article(url):
-    pq = pyquery.PyQuery(BASE_URL + url)
+    pq = pyquery.PyQuery(url=BASE_URL + url)
     p_texts = pq('.row.content.cols-30-70').find('p').map(lambda _, e: pyquery.PyQuery(e).text())
     comment_id = pq('[data-commentId]').attr('data-commentid')
     comments_url = 'http://www.marca.com/servicios/noticias/comentarios/comunidad/listarMejorValorados.html?noticia={0}&version=v2'.format(comment_id)

@@ -1,5 +1,3 @@
 DEVELOPMENT
 
 $ poetry run gunicorn lemsplc_web:app
-
-setup.py/requirements.txt are only to "fool" Dokku
