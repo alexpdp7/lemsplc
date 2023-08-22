@@ -1,8 +1,12 @@
 [tool.poetry]
 name = "lemsplc"
 version = "1.0.0"
-authors = ["alex@corcoles.net"]
+authors = ["Alex <alex@corcoles.net>"]
 description = ""
+packages = [
+    { include = "lemsplc_parser.py" },
+    { include = "lemsplc_web.py" },
+]
 
 [tool.poetry.dependencies]
 python = ">=3.8"
@@ -15,5 +19,5 @@ ipython = "*"
 ipdb = "*"
 
 [build-system]
-requires = ["poetry>=0.12"]
-build-backend = "poetry.masonry.api"
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
