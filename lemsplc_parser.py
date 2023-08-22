@@ -43,7 +43,17 @@ def get_detailed_article(url):
     pq = pyquery.PyQuery(url=BASE_URL + url)
     p_texts = pq('.ue-c-article__body').find('p').map(lambda _, e: pyquery.PyQuery(e).text())
     comment_id = pq('[data-commentId]').attr('data-commentid')
-    comments_url = 'http://www.marca.com/servicios/noticias/comentarios/comunidad/listarMejorValorados.html?noticia={0}&version=v2'.format(comment_id)
-    with request.urlopen(comments_url) as r:
-        comments = json.loads(r.read().decode('utf-8'))
-    return DetailedArticle(p_texts=p_texts, comments=map(json_to_comment, comments['items']))
+    page = 1
+    comments = []
+    while True:
+        comments_url = 'http://www.marca.com/servicios/noticias/comentarios/comunidad/listarMejorValorados.html?noticia={0}&version=v2&pagina={1}'.format(comment_id, page)
+        with request.urlopen(comments_url) as r:
+            page_comments = json.loads(r.read().decode('utf-8'))["items"]
+        if not page_comments:
+            break
+        comments += map(json_to_comment, page_comments)
+
+        page += 1
+        if page > 10:
+            break
+    return DetailedArticle(p_texts=p_texts, comments=comments)
