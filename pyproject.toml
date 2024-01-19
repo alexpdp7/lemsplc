@@ -10,7 +10,7 @@ packages = [
 
 [tool.poetry.dependencies]
 python = ">=3.8"
-flask = {version = "^3.0.0",extras = ["web"]}
+flask = {version = "^3.0.1",extras = ["web"]}
 gunicorn = {version = "^21.2.0",extras = ["web"]}
 pyquery = "^2.0.0"
 
